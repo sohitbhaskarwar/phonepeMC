@@ -10,7 +10,7 @@ import static org.junit.Assert.assertThat;
 import static com.twitter.machinecoding.service.TweetManager.tweetDetailsMap;
 import static com.twitter.machinecoding.service.UserManager.userDetailsMap;
 
-public class Test1 {
+public class UserTest {
     UserManager userManager = new UserManager();
     @Test
     public void creteNewUser(){

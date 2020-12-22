@@ -12,6 +12,15 @@ public class TweetManager {
     public static HashMap<Long, Tweet> tweetDetailsMap = new HashMap<>();
     public static long tweetId = 0;
 
+    public List<Tweet> listAllTweets(){
+        List<Tweet> tweetList = new ArrayList<>();
+
+        for(Map.Entry<Long,Tweet> entry : tweetDetailsMap.entrySet()){
+            tweetList.add(entry.getValue());
+        }
+        return tweetList;
+    }
+
     public boolean postATweet(Tweet tweet) {
         try {
             if (tweet == null)
@@ -20,6 +29,15 @@ public class TweetManager {
                 tweetId++;
                 tweet.setId(tweetId);
                 tweetDetailsMap.put(tweetId, tweet);
+
+                User user = tweet.getUser();
+                if (user.getUserTweetList() == null) {
+                    HashMap<Long, Tweet> map = new HashMap<>();
+                    map.put(tweetId, tweet);
+                    user.setUserTweetList(map);
+                } else {
+                    user.getUserTweetList().put(tweetId, tweet);
+                }
             }
             return true;
 
@@ -32,6 +50,7 @@ public class TweetManager {
     public boolean deleteTweet(User user, long tweetID) {
         tweetDetailsMap.remove(tweetID);
         user.getUserTweetList().remove(tweetID);
+        System.out.println("Tweet deleted for User !!");
         return true;
     }
 
@@ -62,7 +81,7 @@ public class TweetManager {
     public boolean updateTweet(Tweet tweet, String tweetData) {
         try {
             if (tweet == null) {
-                throw new Exception("Tweet with tweetID"+tweet.getId()+" is not present");
+                throw new Exception("Tweet with tweetID" + tweet.getId() + " is not present");
             }
             tweet.setTweetData(tweetData);
             tweetDetailsMap.put(tweet.getId(), tweet);

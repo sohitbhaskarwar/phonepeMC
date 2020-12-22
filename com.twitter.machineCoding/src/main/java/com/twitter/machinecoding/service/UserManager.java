@@ -18,7 +18,8 @@ public class UserManager {
                 userDetailsMap.put(user.getUserName(), user);
                 return true;
             } else {
-                System.out.println("User already present with Id" + user.getUserPassword() + " get another " +
+                System.out.println("User already present with Id " + user.getUserName() + " get " +
+                        "another " +
                         "Id!!!");
                 return false;
             }
@@ -28,16 +29,15 @@ public class UserManager {
         }
     }
 
-    public boolean authenticateUser(String userName, String password){
+    public boolean authenticateUser(String userName, String password) {
         try {
             if (userName == null)
                 throw new Exception("UserName not Provided !!!!\n Enter username!!!");
             if (userDetailsMap.containsKey(userName)) {
                 User user = userDetailsMap.get(userName);
-                if(user.getUserPassword().equals(password)) {
+                if (user.getUserPassword().equals(password)) {
                     return true;
-                }
-                else{
+                } else {
                     throw new Exception("Incorrect Password!!!!");
                 }
             } else {
@@ -53,6 +53,21 @@ public class UserManager {
     public User getUserDetails(String userName) {
         UserManager userManager = new UserManager();
         return userDetailsMap.get(userName);
+    }
+
+    public boolean deleteUserByUserName(String userName) {
+        try {
+            if (userDetailsMap.containsKey(userName)) {
+                userDetailsMap.remove(userName);
+                return true;
+            } else {
+                System.out.println("No user present with username: " + userName + " !!");
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
 

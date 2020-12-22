@@ -21,21 +21,24 @@ public class Manager {
 
     public void raiseRequestForSuperAdmin(SuperAdminRequest superAdminRequest) {
         superAdminRequestList.add(superAdminRequest);
-        requestCounter++;
         superAdminRequestMap.put(requestCounter, superAdminRequest);
         System.out.println("Request Added for SUPER-ADMIN !!!");
     }
 
-    public void requestOfUpdateDelete(long tweetID) {
+    public void requestForUpdateAndDelete(long tweetID) {
         System.out.println("[1].Update \n[2].Delete");
         Tweet tweet = tweetDetailsMap.get(tweetID);
-        Integer ch = scanner.nextInt();
+        // Integer ch = scanner.nextInt();
+        Integer ch = 1;
         SuperAdminRequest superAdminRequest = new SuperAdminRequest();
         switch (ch) {
             case 1:
                 System.out.println("Update Tweet Data :: (enter data for tweet to update)");
-                Tweet updateTweet = new Tweet(tweet.getId(), scanner.next(), "", tweet.getUser());
-
+                //Tweet updateTweet = new Tweet(tweet.getId(), scanner.next(), "", tweet.getUser());
+                Tweet updateTweet = new Tweet(tweet.getId(), "Its XMAS time!!", "",
+                        tweet.getUser());
+                requestCounter++;
+                superAdminRequest.setRequestId(requestCounter);
                 superAdminRequest.setTweet(tweet);
                 superAdminRequest.setCrudOperation(CrudOperation.UPDATE);
                 superAdminRequest.setUpdatedTweet(updateTweet);
@@ -43,6 +46,7 @@ public class Manager {
                 raiseRequestForSuperAdmin(superAdminRequest);
                 break;
             case 2:
+                superAdminRequest.setRequestId(requestCounter);
                 superAdminRequest.setCrudOperation(CrudOperation.DELETE);
                 superAdminRequest.setTweet(tweet);
                 raiseRequestForSuperAdmin(superAdminRequest);
@@ -76,5 +80,9 @@ public class Manager {
                 break;
         }
 
+    }
+
+    public HashMap<Integer, SuperAdminRequest> getSuperAdminMap() {
+        return superAdminRequestMap;
     }
 }

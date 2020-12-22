@@ -76,7 +76,7 @@ public class Driver {
                                     for (Map.Entry<Long, Tweet> tweet : user.getUserTweetList().entrySet())
                                         System.out.println(tweet.getKey() + " " + tweet.getValue().getTweetData());
 
-                                    manager.requestOfUpdateDelete(scanner.nextInt());
+                                    manager.requestForUpdateAndDelete(scanner.nextInt());
                                     break;
                                 case SUPERADMIN:
                                     System.out.println("Request Need to be Responded :: ");
